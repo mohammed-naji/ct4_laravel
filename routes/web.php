@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 
 // Route::get('uri', 'action');
 // Route::post('uri', 'action');
@@ -65,11 +66,48 @@ use Illuminate\Support\Facades\Route;
 //     return $name . " course page";
 // });
 
-Route::get('/courses/{name}/{hours?}', function ($name, $hours = null) {
-    if ($hours) {
-        return $name . " course page, hours " . $hours;
-    }
+// Route::get('/courses/{name}/{hours?}', function ($name, $hours = null) {
+//     if ($hours) {
+//         return $name . " course page, hours " . $hours;
+//     }
 
 
-    return $name . " course page";
-});
+//     return $name . " course page";
+// });
+
+// Route::get('/', function () {
+
+//     $name = "ahmed";
+//     $age = 31;
+
+//     // $url = url('/user/' . $name . '/age/' . $age);
+//     // $url = route('aboutpage');
+
+//     $url = route('user', ['age' => $age, 'name' => $name]);
+
+//     // return "<a href='/about-us'>About Page</a>";
+//     return "<a href='$url'>User Page</a>";
+// })->name('front.home');
+
+// Route::get('/about-ussssssss', function () {
+//     return "About";
+// })->name('aboutpage');
+
+// Route::get('/user/{name}/age/{age}', function ($name, $age) {
+//     return "Welcome user $name, your age $age";
+// })->whereAlpha('name')->whereNumber('age')->name('user');
+
+// Route::get('/news/{id}', function ($id) {
+//     return "News Number $id";
+// })->where('id', '[0-5]+');
+
+// ::
+// ->
+// =>
+// .
+
+// home, about, contact
+
+Route::get('/', [MainController::class, 'home'])->name('front.home');
+Route::get('/about', [MainController::class, 'about'])->name('front.about');
+Route::get('/contact', [MainController::class, 'contact'])->name('front.contact');
