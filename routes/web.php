@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\CalcController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\TestController;
 
 // Route::get('uri', 'action');
 // Route::post('uri', 'action');
@@ -108,6 +112,39 @@ use App\Http\Controllers\MainController;
 
 // home, about, contact
 
-Route::get('/', [MainController::class, 'home'])->name('front.home');
-Route::get('/about', [MainController::class, 'about'])->name('front.about');
-Route::get('/contact', [MainController::class, 'contact'])->name('front.contact');
+// Route::get('/', [MainController::class, 'home'])->name('front.home');
+// // Route::get('/', 'MainController@home')->name('front.home');
+// Route::get('/about', [MainController::class, 'about'])->name('front.about');
+// Route::get('/contact', [MainController::class, 'contact'])->name('front.contact');
+
+
+// home, about, services, team, news, single news, contact
+
+// Route::get('/', [SiteController::class, 'home'])->name('site.home');
+// Route::get('/about', [SiteController::class, 'about'])->name('site.about');
+// Route::get('/services', [SiteController::class, 'services'])->name('site.services');
+// Route::get('/team', [SiteController::class, 'team'])->name('site.team');
+// Route::get('/news', [SiteController::class, 'news'])->name('site.news');
+// Route::get('/news/{id}', [SiteController::class, 'news_single'])->name('site.news_single');
+// Route::get('/contact', [SiteController::class, 'contact'])->name('site.contact');
+// Route::post('/contact', [SiteController::class, 'contact_data'])->name('site.contact_data');
+
+// Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
+// Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
+// Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+// Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
+// Route::get('/posts/{id}/edit', [PostsController::class, 'edit'])->name('posts.edit');
+// Route::put('/posts/{id}', [PostsController::class, 'update'])->name('posts.update');
+// Route::delete('/posts/{id}', [PostsController::class, 'destroy'])->name('posts.destroy');
+
+// Route::resource('posts', PostsController::class);
+
+// /pages/contact
+// Route::get('pages/contact', [SiteController::class, 'contact']);
+// Route::get('pages/{id}', [SiteController::class, 'pages']);
+
+// Route::get('/export', TestController::class);
+
+
+Route::get('sum/{x}/{y}', [CalcController::class, 'sum'])->name('sum');
+Route::get('div/{x}/{y}', [CalcController::class, 'div'])->name('div');
