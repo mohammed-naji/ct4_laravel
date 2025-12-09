@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\CalcController;
+use App\Http\Controllers\FreelancerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 
 // Route::get('uri', 'action');
 // Route::post('uri', 'action');
@@ -148,3 +151,14 @@ use App\Http\Controllers\TestController;
 
 Route::get('sum/{x}/{y}', [CalcController::class, 'sum'])->name('sum');
 Route::get('div/{x}/{y}', [CalcController::class, 'div'])->name('div');
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+Route::get('/freelancer', [FreelancerController::class, 'index'])->name('freelancer.index');
+
+Route::prefix('personal')->name('personal.')->group(function () {
+    Route::get('/', [PersonalController::class, 'index'])->name('index');
+    Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
+    Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
+    Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
+});
