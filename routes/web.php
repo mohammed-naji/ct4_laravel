@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CalcController;
 use App\Http\Controllers\FreelancerController;
 use Illuminate\Support\Facades\Route;
@@ -161,4 +162,11 @@ Route::prefix('personal')->name('personal.')->group(function () {
     Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
     Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
     Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
+});
+
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/about', [BlogController::class, 'about'])->name('about');
+    Route::get('/post', [BlogController::class, 'post'])->name('post');
+    Route::get('/contact', [BlogController::class, 'contact'])->name('contact');
 });

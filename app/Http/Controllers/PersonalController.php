@@ -8,12 +8,16 @@ class PersonalController extends Controller
 {
     function index()
     {
-        return view('personal.index');
+        $about_title = "About Homepage";
+
+        return view('personal.index', compact('about_title'));
     }
 
     function resume()
     {
-        return view('personal.resume');
+        $about_title = "About Resume";
+
+        return view('personal.resume', compact('about_title'));
     }
 
     function projects()
