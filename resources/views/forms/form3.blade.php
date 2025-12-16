@@ -14,9 +14,7 @@
         </style>
     @endpush
     <h1>Register Form</h1>
-    {{-- <i class="far fa-eye-slash"></i>
-    <i class="far fa-heart"></i>
-    <i class="fab fa-facebook"></i> --}}
+    @include('forms._errors')
     <form action="{{ route('forms.form3') }}" method="POST">
         @csrf
         <x-form.input name="name" label="Name" />
@@ -24,7 +22,7 @@
         <x-form.input name="age" label="Age" type="number" />
         <x-form.input name="mobile" label="Mobile" />
         <x-form.input name="password" label="Password" type="password" />
-        <x-form.input name="confirm_password" label="Confirm Password" type="password" />
+        <x-form.input name="password_confirmation" label="Confirm Password" type="password" />
         <button class="btn btn-primary">Register</button>
     </form>
     @push('js')
