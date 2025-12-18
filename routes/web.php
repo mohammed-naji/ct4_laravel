@@ -163,6 +163,7 @@ Route::prefix('personal')->name('personal.')->group(function () {
     Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
     Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
     Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
+    Route::post('/contact', [PersonalController::class, 'contact_email']);
 });
 
 Route::prefix('blog')->name('blog.')->group(function () {
@@ -184,3 +185,6 @@ Route::post('/form3', [FormController::class, 'form3_data']);
 
 Route::get('/form4', [FormController::class, 'form4'])->name('forms.form4');
 Route::post('/form4', [FormController::class, 'form4_data']);
+
+Route::get('/form5', [FormController::class, 'form5'])->name('forms.form5');
+Route::post('/form5', [FormController::class, 'form5_data']);

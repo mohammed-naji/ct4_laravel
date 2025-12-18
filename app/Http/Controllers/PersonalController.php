@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonalRequest;
+use App\Mail\TestMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PersonalController extends Controller
 {
@@ -28,5 +31,19 @@ class PersonalController extends Controller
     function contact()
     {
         return view('personal.contact');
+    }
+
+    function contact_email(PersonalRequest $request)
+    {
+
+        Mail::to('admin@info.com')->send(new TestMail());
+
+        // Mail::send('mails.test', [], function ($message) {
+        //     $message->to('recipient@example.com')
+        //         ->subject('Order Shipped')
+        //         ->from('noreply@example.com');
+        // });
+
+        dd("Email Sent Successfully");
     }
 }

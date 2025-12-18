@@ -118,4 +118,42 @@ class FormController extends Controller
 
         dd($request->all());
     }
+
+    function form5()
+    {
+        return view('forms.form5');
+    }
+
+    function form5_data(Request $request)
+    {
+        // dd($request->all());
+        // 1. validation
+        $request->validate([
+            'name' => 'required',
+            'image' => 'required'
+        ]);
+
+
+        $name = $request->name;
+        // 2. uploads files
+        // dd($request->file('image'));
+        // $request->file('image')->store('images');
+        // $request->file('image')->store('images', 'public');
+        $path = $request->file('image')->store('images', 'custom');
+
+        // $img_name = $request->file('image')->getClientOriginalName();
+        // $ex = $request->file('image')->getClientOriginalExtension();
+
+        // // abc.png => 654646646_8978979_3121654.png
+
+        // $new_name = rand(0000000000, 9999999999) . '_' . rand(0000000000, 9999999999) . '_' . rand(0000000000, 9999999999) . '.' . $ex;
+
+        // $request->file('image')->move('images', $new_name);
+
+        // 3. store in database
+
+        // 4. redirect to another page
+        return view('forms.form5_data', compact('name', 'path'));
+        dd($request->all());
+    }
 }
