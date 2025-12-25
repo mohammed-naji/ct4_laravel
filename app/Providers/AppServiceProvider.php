@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,5 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('dev_name', 'Zina Mohammed Naji Abu Alqumbuz');
+
+        Schema::defaultStringLength(191);
     }
 }
