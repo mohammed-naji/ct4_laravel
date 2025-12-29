@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CalcController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FreelancerController;
 use Illuminate\Support\Facades\Route;
@@ -188,3 +189,5 @@ Route::post('/form4', [FormController::class, 'form4_data']);
 
 Route::get('/form5', [FormController::class, 'form5'])->name('forms.form5');
 Route::post('/form5', [FormController::class, 'form5_data']);
+
+Route::resource('courses', CourseController::class);
