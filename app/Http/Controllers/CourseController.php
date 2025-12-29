@@ -10,12 +10,35 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $courses = Course::all();
-        $courses = Course::paginate(10);
+        // dd($request->q);
 
+        // $courses = Course::all();
+        // $courses = Course::paginate(10);
+        // $courses = Course::simplePaginate(10);
+        // $courses = Course::orderBy('id', 'DESC')->get();
+        // $courses = Course::orderBy('id', 'DESC')->paginate();
+        // $courses = Course::latest()->paginate();
         // dd($courses);
+
+        // if ($request->has('q')) {
+        //     $courses = Course::where('title', 'like', '%' . $request->q . '%')
+        //         ->orderBy($request->sort, $request->order)
+        //         ->latest()
+        //         ->paginate()
+        //         ->withQueryString();
+        // } else {
+        //     $courses = Course::latest()->paginate();
+        // }
+
+        $courses = Course::when($request->q, function ($q) use ($request) {
+            $q->where('title', 'like', '%' . $request->q . '%');
+        })
+            ->orderBy($request->sort ?? 'title', $request->order ?? 'asc')
+            ->latest()
+            ->paginate()
+            ->withQueryString();
 
         return view('courses.index', compact('courses'));
     }
@@ -66,5 +89,15 @@ class CourseController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    function search(Request $request)
+    {
+        return [
+            'courses' => Course::select('id', 'title')
+                ->where('title', 'like', '%' . $request->q . '%')
+                ->take(10)
+                ->get()
+        ];
     }
 }

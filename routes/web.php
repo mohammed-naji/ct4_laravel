@@ -191,3 +191,4 @@ Route::get('/form5', [FormController::class, 'form5'])->name('forms.form5');
 Route::post('/form5', [FormController::class, 'form5_data']);
 
 Route::resource('courses', CourseController::class);
+Route::get('search-courses', [CourseController::class, 'search'])->name('courses.search');
