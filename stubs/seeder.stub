@@ -1,19 +1,17 @@
 <?php
 
-namespace Database\Seeders;
+namespace {{ namespace }};
 
-use App\Models\Course;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CourseSeeder extends Seeder
+class {{ class }} extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Course::truncate();
-        Course::factory(10)->create();
+        //
     }
 }

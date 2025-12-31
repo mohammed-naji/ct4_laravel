@@ -42,7 +42,24 @@
 
 <body>
     <div class="container my-5">
-        <h1>All Courses</h1>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h1>All Courses</h1>
+            <a class="btn btn-primary" href="{{ route('courses.create') }}">Add new Course</a>
+        </div>
+
+        @if (session('msg'))
+            <div class="alert alert-{{ session('type') ?? 'info' }} alert-dismissible fade show" role="alert">
+                {{ session('msg') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        {{-- @session('msg')
+            <div class="alert alert-success">
+                {{ $value }}
+            </div>
+        @endsession --}}
+
         <form action="{{ route('courses.index') }}" method="GET" class="my-3">
             <div class="row">
                 <div class="col-md-6" style="position: relative">
@@ -75,7 +92,7 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr class="table-dark">
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Image</th>
                     <th>Title</th>
                     <th>Hours</th>
@@ -112,18 +129,28 @@
                 @endif --}}
                 @forelse ($courses as $course)
                     <tr>
-                        <td>{{ $course->id }}</td>
-                        <td><img src="{{ $course->image }}" alt=""></td>
+                        {{-- <td>{{ $course->id }}</td> --}}
+                        <td>{{ $loop->iteration }}</td>
+                        <td><img width="100 " src="{{ asset($course->image) }}" alt=""></td>
                         <td>{{ $course->title }}</td>
                         <td>{{ $course->hours }}</td>
                         <td>{{ $course->price }}</td>
-                        <td>{{ $course->created_at }}</td>
-                        <td>{{ $course->updated_at }}</td>
+                        <td>{{ $course->created_at->format('d M, Y | h:m:s A') }}</td>
+                        {{-- <td>{{ $course->created_at->toDateString() }}</td> --}}
+                        <td>{{ $course->updated_at->diffForHumans() }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('courses.show', $course->id) }}" class="btn btn-sm btn-success"><i
+                                        class="fas fa-eye"></i></a>
                                 <a href="" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                <form action="{{ route('courses.destroy', $course->id) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button onclick="return confirm('Are you sure?!')" class="btn btn-sm btn-danger"><i
+                                            class="fas fa-trash"></i></button>
+                                </form>
+                                {{-- <a href="{{ route('courses.destroy', $course->id) }}" class="btn btn-sm btn-danger"><i
+                                        class="fas fa-trash"></i></a> --}}
                             </div>
                         </td>
                     </tr>
@@ -139,6 +166,7 @@
         {{ $courses->links() }}
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
@@ -171,6 +199,12 @@
                 result.style.display = 'none'
             }
         }
+
+
+        // Remove the alert after 3 seconds
+        setTimeout(() => {
+            document.querySelector('.alert').remove();
+        }, 3000);
     </script>
 </body>
 
