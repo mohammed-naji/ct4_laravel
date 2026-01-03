@@ -190,5 +190,8 @@ Route::post('/form4', [FormController::class, 'form4_data']);
 Route::get('/form5', [FormController::class, 'form5'])->name('forms.form5');
 Route::post('/form5', [FormController::class, 'form5_data']);
 
+Route::get('/courses/trash', [CourseController::class, 'trash'])->name('courses.trash');
+Route::get('/courses/{course}/restore', [CourseController::class, 'restore'])->name('courses.restore')->withTrashed();
+Route::delete('/courses/{course}/delete', [CourseController::class, 'delete'])->name('courses.delete')->withTrashed();
 Route::resource('courses', CourseController::class);
 Route::get('search-courses', [CourseController::class, 'search'])->name('courses.search');

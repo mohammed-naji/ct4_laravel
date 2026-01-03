@@ -44,7 +44,10 @@
     <div class="container my-5">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h1>All Courses</h1>
-            <a class="btn btn-primary" href="{{ route('courses.create') }}">Add new Course</a>
+            <div>
+                <a class="btn btn-danger" href="{{ route('courses.trash') }}">Trashed Course</a>
+                <a class="btn btn-primary" href="{{ route('courses.create') }}">Add new Course</a>
+            </div>
         </div>
 
         @if (session('msg'))
@@ -94,7 +97,7 @@
                 <tr class="table-dark">
                     <th>#</th>
                     <th>Image</th>
-                    <th>Title</th>
+                    <th style="width: 35%">Title</th>
                     <th>Hours</th>
                     <th>Price</th>
                     <th>Created At</th>
@@ -142,7 +145,8 @@
                             <div class="btn-group">
                                 <a href="{{ route('courses.show', $course->id) }}" class="btn btn-sm btn-success"><i
                                         class="fas fa-eye"></i></a>
-                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('courses.edit', $course) }}" class="btn btn-sm btn-primary"><i
+                                        class="fas fa-edit"></i></a>
                                 <form action="{{ route('courses.destroy', $course->id) }}" method="POST">
                                     @csrf
                                     @method('delete')
@@ -173,6 +177,7 @@
         let input = document.querySelector('.search-input')
         let result = document.querySelector('.res')
         let resList = document.querySelector('.res ul')
+
 
         input.onkeyup = () => {
             // console.log();

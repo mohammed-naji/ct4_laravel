@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
+use ftp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -38,6 +39,8 @@ class CourseController extends Controller
             $q->where('title', 'like', '%' . $request->q . '%');
         })
             ->orderBy($request->sort ?? 'id', $request->order ?? 'desc')
+            // ->where('hours', '>', 50)
+            // ->hours()
             ->paginate()
             ->withQueryString();
 
@@ -107,17 +110,37 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course)
     {
-        //
+        return view('courses.edit', compact('course'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseRequest $request, Course $course)
     {
-        //
+        //1. validation
+
+        //2. upload files
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('uploads', 'custom');
+        }
+
+        // - using model class
+        $course->update([
+            'title' => $request->title,
+            'image' => $path ?? $course->image,
+            'content' => $request->content,
+            'hours' => $request->hours,
+            'price' => $request->price,
+        ]);
+
+        //4. redirect to another page
+        return redirect()
+            ->route('courses.index')
+            ->with('msg', 'course updated successfully')
+            ->with('type', 'warning');
     }
 
     /**
@@ -126,7 +149,7 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         // unlink()
-        File::delete(public_path($course->image));
+        // File::delete(public_path($course->image));
         $course->delete();
 
         return redirect()
@@ -135,7 +158,7 @@ class CourseController extends Controller
             ->with('type', 'danger');
     }
 
-    function search(Request $request)
+    public function search(Request $request)
     {
         return [
             'courses' => Course::select('id', 'title')
@@ -143,5 +166,38 @@ class CourseController extends Controller
                 ->take(10)
                 ->get()
         ];
+    }
+
+    /**
+     * Show the trashed resource
+     */
+    public function trash()
+    {
+        // $courses = Course::whereNotNull('deleted_at')->paginate();
+        $courses = Course::onlyTrashed()->paginate();
+
+        return view('courses.trash', compact('courses'));
+    }
+
+    public function restore(Course $course)
+    {
+        // $course->update(['deleted_at' => null]);
+        $course->restore();
+
+        return redirect()
+            ->route('courses.trash')
+            ->with('msg', 'Course restored successfully')
+            ->with('type', 'info');
+    }
+
+    public function delete(Course $course)
+    {
+        File::delete(public_path($course->image));
+        $course->forceDelete();
+
+        return redirect()
+            ->route('courses.trash')
+            ->with('msg', 'Course deleted permanently successfully')
+            ->with('type', 'danger');
     }
 }
