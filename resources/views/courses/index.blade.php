@@ -100,6 +100,7 @@
                     <th style="width: 35%">Title</th>
                     <th>Hours</th>
                     <th>Price</th>
+                    <th>Lessons Count</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Actions</th>
@@ -138,11 +139,14 @@
                         <td>{{ $course->title }}</td>
                         <td>{{ $course->hours }}</td>
                         <td>{{ $course->price }}</td>
+                        <td>{{ $course->lessons_count }}</td>
                         <td>{{ $course->created_at->format('d M, Y | h:m:s A') }}</td>
                         {{-- <td>{{ $course->created_at->toDateString() }}</td> --}}
                         <td>{{ $course->updated_at->diffForHumans() }}</td>
                         <td>
                             <div class="btn-group">
+                                <a href="{{ route('courses.lessons.create', $course->id) }}"
+                                    class="btn btn-sm btn-info"><i class="fas fa-plus"></i></a>
                                 <a href="{{ route('courses.show', $course->id) }}" class="btn btn-sm btn-success"><i
                                         class="fas fa-eye"></i></a>
                                 <a href="{{ route('courses.edit', $course) }}" class="btn btn-sm btn-primary"><i
@@ -160,7 +164,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">Noooooo Data Found</td>
+                        <td colspan="9" class="text-center">Noooooo Data Found</td>
                     </tr>
                 @endforelse
             </tbody>

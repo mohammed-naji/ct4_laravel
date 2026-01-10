@@ -5,10 +5,12 @@ use App\Http\Controllers\CalcController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FreelancerController;
+use App\Http\Controllers\Lessoncontroller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\RelationController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
@@ -195,3 +197,13 @@ Route::get('/courses/{course}/restore', [CourseController::class, 'restore'])->n
 Route::delete('/courses/{course}/delete', [CourseController::class, 'delete'])->name('courses.delete')->withTrashed();
 Route::resource('courses', CourseController::class);
 Route::get('search-courses', [CourseController::class, 'search'])->name('courses.search');
+
+
+Route::resource('courses.lessons', Lessoncontroller::class);
+// Route::resource('lessons', Lessoncontroller::class);
+
+// Relations Routes
+Route::prefix('relations')->group(function () {
+    Route::get('users', [RelationController::class, 'users']);
+    Route::get('passport/{passport}', [RelationController::class, 'passport']);
+});

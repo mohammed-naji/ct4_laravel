@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Passport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -10,3 +14,13 @@ Artisan::command('inspire', function () {
 Artisan::command('dev', function () {
     $this->comment("Mohammed N. Abu alqumbuz");
 })->purpose('Display the developer name');
+
+Artisan::command('cleardata', function () {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    Course::truncate();
+    User::truncate();
+    Passport::truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+    $this->comment("Data truncated successfully");
+})->purpose('Truncate data');

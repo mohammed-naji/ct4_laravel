@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Passport extends Model
+class Lesson extends Model
 {
     //
 
     protected $guarded = [];
 
-    public function user()
+    public function course()
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsTo(Course::class)->withDefault();
     }
 }

@@ -35,14 +35,16 @@ class CourseController extends Controller
         //     $courses = Course::latest()->paginate();
         // }
 
-        $courses = Course::when($request->q, function ($q) use ($request) {
-            $q->where('title', 'like', '%' . $request->q . '%');
-        })
+        $courses = Course::withCount('lessons')
+            ->when($request->q, function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->q . '%');
+            })
             ->orderBy($request->sort ?? 'id', $request->order ?? 'desc')
             // ->where('hours', '>', 50)
             // ->hours()
             ->paginate()
             ->withQueryString();
+        // dd($courses);
 
         return view('courses.index', compact('courses'));
     }

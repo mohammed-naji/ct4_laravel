@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use ftp;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,5 +29,10 @@ class Course extends Model
     protected function hours(Builder $query): void
     {
         $query->where('hours', '>', 40);
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
     }
 }
